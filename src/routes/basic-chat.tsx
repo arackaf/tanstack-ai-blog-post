@@ -1,18 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { getRequest } from "@tanstack/react-start/server";
-
-import { chat, chatParamsFromRequest, toServerSentEventsResponse } from "@tanstack/ai";
-import { createVercelGatewayText, vercelGatewayText } from "@tanstack/ai-vercel-gateway";
 
 import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
 
 export const Route = createFileRoute("/basic-chat")({ component: BasicChat });
+
+const MIN_PROMPT_LENGTH = 20;
 
 function BasicChat() {
   const [prompt, setPrompt] = useState("");
@@ -24,23 +22,43 @@ function BasicChat() {
     sendMessage(prompt);
   };
 
+  const wasLoading = useRef(isLoading);
+  useEffect(() => {
+    if (wasLoading.current && !isLoading) {
+      setPrompt("");
+    }
+    wasLoading.current = isLoading;
+  }, [isLoading]);
+
+  const charactersRemaining = MIN_PROMPT_LENGTH - prompt.length;
+
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Basic Chat</h1>
+
+      <div className="flex flex-col gap-4">
+        {messages.map((message) =>
+          message.role === "user" ? (
+            <div key={message.id} className="w-1/2 self-end rounded-2xl bg-blue-100 px-4 py-2">
+              {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
+            </div>
+          ) : (
+            <div key={message.id} className="w-full">
+              {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
+            </div>
+          ),
+        )}
+        {isLoading && <Loader2 className="size-6 animate-spin text-muted-foreground" />}
+      </div>
+
       <div className="flex flex-col gap-2">
         <Label htmlFor="prompt">Prompt</Label>
         <Textarea id="prompt" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
+        {prompt.length > 0 && charactersRemaining > 0 && <p className="text-sm text-muted-foreground">{charactersRemaining} more characters</p>}
       </div>
-      <Button className="self-start" onClick={handleGenerate}>
+      <Button className="self-start" onClick={handleGenerate} disabled={isLoading || charactersRemaining > 0}>
         Generate
       </Button>
-
-      {messages.map((message) => (
-        <div key={message.id}>
-          <strong>{message.role}</strong>
-          {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
-        </div>
-      ))}
     </div>
   );
 }
