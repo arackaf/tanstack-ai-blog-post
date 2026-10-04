@@ -12,21 +12,6 @@ import { createVercelGatewayText, vercelGatewayText } from "@tanstack/ai-vercel-
 
 import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
 
-const sendMessage = createServerFn({ method: "POST" })
-  .validator((data: { prompt: string }) => data)
-  .handler(async ({ data }) => {
-    const request = getRequest();
-
-    const { messages } = await request.json();
-
-    const stream = chat({
-      adapter: vercelGatewayText("anthropic/claude-opus-5"),
-      messages,
-    });
-
-    return toServerSentEventsResponse(stream);
-  });
-
 export const Route = createFileRoute("/basic-chat")({ component: BasicChat });
 
 function BasicChat() {
@@ -36,7 +21,7 @@ function BasicChat() {
     connection: fetchServerSentEvents("/api/ai/chat"),
   });
   const handleGenerate = () => {
-    // TODO
+    sendMessage(prompt);
   };
 
   return (
@@ -49,6 +34,13 @@ function BasicChat() {
       <Button className="self-start" onClick={handleGenerate}>
         Generate
       </Button>
+
+      {messages.map((message) => (
+        <div key={message.id}>
+          <strong>{message.role}</strong>
+          {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
+        </div>
+      ))}
     </div>
   );
 }
