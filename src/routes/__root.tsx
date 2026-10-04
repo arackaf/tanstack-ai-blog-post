@@ -1,9 +1,4 @@
-import {
-  HeadContent,
-  Link,
-  Scripts,
-  createRootRouteWithContext,
-} from "@tanstack/react-router";
+import { HeadContent, Link, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
@@ -11,13 +6,7 @@ import { useState } from "react";
 import { MenuIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
 import appCss from "../styles.css?url";
@@ -54,7 +43,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 const navLinks = [
   { to: "/basic-chat", label: "Basic Chat" },
-  { to: "/streaming", label: "Streaming" },
   { to: "/persistence", label: "Persistence" },
   { to: "/structured-output", label: "Structured Output" },
   { to: "/vercel-ai-streaming", label: "Vercel Streaming" },
@@ -123,9 +111,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               </nav>
             </div>
           </header>
-          <main className="mx-auto w-full max-w-5xl flex-1 border-x bg-background px-4 py-8 shadow-sm">
-            {children}
-          </main>
+          <main className="mx-auto w-full max-w-5xl flex-1 border-x bg-background px-4 py-8 shadow-sm">{children}</main>
         </div>
         <TanStackDevtools
           config={{
