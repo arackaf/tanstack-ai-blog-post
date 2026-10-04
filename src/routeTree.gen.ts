@@ -15,6 +15,7 @@ import { Route as PersistenceRouteImport } from './routes/persistence'
 import { Route as StreamingRouteImport } from './routes/streaming'
 import { Route as StructuredOutputRouteImport } from './routes/structured-output'
 import { Route as VercelAiStreamingRouteImport } from './routes/vercel-ai-streaming'
+import { Route as ApiAiChatRouteImport } from './routes/api/ai/chat'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const VercelAiStreamingRoute = VercelAiStreamingRouteImport.update({
   path: '/vercel-ai-streaming',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiChatRoute = ApiAiChatRouteImport.update({
+  id: '/api/ai/chat',
+  path: '/api/ai/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/streaming': typeof StreamingRoute
   '/structured-output': typeof StructuredOutputRoute
   '/vercel-ai-streaming': typeof VercelAiStreamingRoute
+  '/api/ai/chat': typeof ApiAiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/streaming': typeof StreamingRoute
   '/structured-output': typeof StructuredOutputRoute
   '/vercel-ai-streaming': typeof VercelAiStreamingRoute
+  '/api/ai/chat': typeof ApiAiChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/streaming': typeof StreamingRoute
   '/structured-output': typeof StructuredOutputRoute
   '/vercel-ai-streaming': typeof VercelAiStreamingRoute
+  '/api/ai/chat': typeof ApiAiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/streaming'
     | '/structured-output'
     | '/vercel-ai-streaming'
+    | '/api/ai/chat'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/streaming'
     | '/structured-output'
     | '/vercel-ai-streaming'
+    | '/api/ai/chat'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/streaming'
     | '/structured-output'
     | '/vercel-ai-streaming'
+    | '/api/ai/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   StreamingRoute: typeof StreamingRoute
   StructuredOutputRoute: typeof StructuredOutputRoute
   VercelAiStreamingRoute: typeof VercelAiStreamingRoute
+  ApiAiChatRoute: typeof ApiAiChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VercelAiStreamingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai/chat': {
+      id: '/api/ai/chat'
+      path: '/api/ai/chat'
+      fullPath: '/api/ai/chat'
+      preLoaderRoute: typeof ApiAiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   StreamingRoute: StreamingRoute,
   StructuredOutputRoute: StructuredOutputRoute,
   VercelAiStreamingRoute: VercelAiStreamingRoute,
+  ApiAiChatRoute: ApiAiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
