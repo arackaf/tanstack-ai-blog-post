@@ -11,8 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BasicChatRouteImport } from './routes/basic-chat'
-import { Route as PersistenceRouteImport } from './routes/persistence'
 import { Route as StructuredOutputRouteImport } from './routes/structured-output'
+import { Route as PersistenceIndexRouteImport } from './routes/persistence/index'
+import { Route as PersistenceIdRouteImport } from './routes/persistence/$id'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai/chat'
 
 const IndexRoute = IndexRouteImport.update({
@@ -25,14 +26,19 @@ const BasicChatRoute = BasicChatRouteImport.update({
   path: '/basic-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PersistenceRoute = PersistenceRouteImport.update({
-  id: '/persistence',
-  path: '/persistence',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const StructuredOutputRoute = StructuredOutputRouteImport.update({
   id: '/structured-output',
   path: '/structured-output',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersistenceIndexRoute = PersistenceIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PersistenceRoute,
+} as any)
+const PersistenceIdRoute = PersistenceIdRouteImport.update({
+  id: '/persistence/$id',
+  path: '/persistence/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAiChatRoute = ApiAiChatRouteImport.update({
@@ -44,46 +50,60 @@ const ApiAiChatRoute = ApiAiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/basic-chat': typeof BasicChatRoute
-  '/persistence': typeof PersistenceRoute
   '/structured-output': typeof StructuredOutputRoute
+  '/persistence/$id': typeof PersistenceIdRoute
+  '/persistence/': typeof PersistenceIndexRoute
   '/api/ai/chat': typeof ApiAiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/basic-chat': typeof BasicChatRoute
-  '/persistence': typeof PersistenceRoute
   '/structured-output': typeof StructuredOutputRoute
+  '/persistence/$id': typeof PersistenceIdRoute
+  '/persistence': typeof PersistenceIndexRoute
   '/api/ai/chat': typeof ApiAiChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/basic-chat': typeof BasicChatRoute
-  '/persistence': typeof PersistenceRoute
   '/structured-output': typeof StructuredOutputRoute
+  '/persistence/$id': typeof PersistenceIdRoute
+  '/persistence/': typeof PersistenceIndexRoute
   '/api/ai/chat': typeof ApiAiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/basic-chat' | '/persistence' | '/structured-output' | '/api/ai/chat'
+    | '/'
+    | '/basic-chat'
+    | '/structured-output'
+    | '/persistence/$id'
+    | '/persistence/'
+    | '/api/ai/chat'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/basic-chat' | '/persistence' | '/structured-output' | '/api/ai/chat'
+    | '/'
+    | '/basic-chat'
+    | '/structured-output'
+    | '/persistence/$id'
+    | '/persistence'
+    | '/api/ai/chat'
   id:
     | '__root__'
     | '/'
     | '/basic-chat'
-    | '/persistence'
     | '/structured-output'
+    | '/persistence/$id'
+    | '/persistence/'
     | '/api/ai/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BasicChatRoute: typeof BasicChatRoute
-  PersistenceRoute: typeof PersistenceRoute
   StructuredOutputRoute: typeof StructuredOutputRoute
+  PersistenceIdRoute: typeof PersistenceIdRoute
   ApiAiChatRoute: typeof ApiAiChatRoute
 }
 
@@ -103,18 +123,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BasicChatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/persistence': {
-      id: '/persistence'
-      path: '/persistence'
-      fullPath: '/persistence'
-      preLoaderRoute: typeof PersistenceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/structured-output': {
       id: '/structured-output'
       path: '/structured-output'
       fullPath: '/structured-output'
       preLoaderRoute: typeof StructuredOutputRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persistence/': {
+      id: '/persistence/'
+      path: '/'
+      fullPath: '/persistence/'
+      preLoaderRoute: typeof PersistenceIndexRouteImport
+      parentRoute: typeof PersistenceRoute
+    }
+    '/persistence/$id': {
+      id: '/persistence/$id'
+      path: '/persistence/$id'
+      fullPath: '/persistence/$id'
+      preLoaderRoute: typeof PersistenceIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/ai/chat': {
@@ -130,8 +157,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BasicChatRoute: BasicChatRoute,
-  PersistenceRoute: PersistenceRoute,
   StructuredOutputRoute: StructuredOutputRoute,
+  PersistenceIdRoute: PersistenceIdRoute,
   ApiAiChatRoute: ApiAiChatRoute,
 }
 export const routeTree = rootRouteImport
