@@ -45,7 +45,6 @@ const navLinks = [
   { to: "/basic-chat", label: "Basic Chat" },
   { to: "/persistence", label: "Persistence" },
   { to: "/structured-output", label: "Structured Output" },
-  { to: "/vercel-ai-streaming", label: "Vercel Streaming" },
 ] as const;
 
 function MobileNav() {
