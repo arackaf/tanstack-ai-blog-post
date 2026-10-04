@@ -10,33 +10,81 @@
 
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as IndexRouteImport } from "./routes/index";
+import { Route as BasicChatRouteImport } from "./routes/basic-chat";
+import { Route as PersistenceRouteImport } from "./routes/persistence";
+import { Route as StreamingRouteImport } from "./routes/streaming";
+import { Route as StructuredOutputRouteImport } from "./routes/structured-output";
 
 const IndexRoute = IndexRouteImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => rootRouteImport,
 } as any);
+const BasicChatRoute = BasicChatRouteImport.update({
+  id: "/basic-chat",
+  path: "/basic-chat",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const PersistenceRoute = PersistenceRouteImport.update({
+  id: "/persistence",
+  path: "/persistence",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const StreamingRoute = StreamingRouteImport.update({
+  id: "/streaming",
+  path: "/streaming",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const StructuredOutputRoute = StructuredOutputRouteImport.update({
+  id: "/structured-output",
+  path: "/structured-output",
+  getParentRoute: () => rootRouteImport,
+} as any);
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
+  "/basic-chat": typeof BasicChatRoute;
+  "/persistence": typeof PersistenceRoute;
+  "/streaming": typeof StreamingRoute;
+  "/structured-output": typeof StructuredOutputRoute;
 }
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
+  "/basic-chat": typeof BasicChatRoute;
+  "/persistence": typeof PersistenceRoute;
+  "/streaming": typeof StreamingRoute;
+  "/structured-output": typeof StructuredOutputRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/": typeof IndexRoute;
+  "/basic-chat": typeof BasicChatRoute;
+  "/persistence": typeof PersistenceRoute;
+  "/streaming": typeof StreamingRoute;
+  "/structured-output": typeof StructuredOutputRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/";
+  fullPaths:
+    "/" | "/basic-chat" | "/persistence" | "/streaming" | "/structured-output";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/";
-  id: "__root__" | "/";
+  to:
+    "/" | "/basic-chat" | "/persistence" | "/streaming" | "/structured-output";
+  id:
+    | "__root__"
+    | "/"
+    | "/basic-chat"
+    | "/persistence"
+    | "/streaming"
+    | "/structured-output";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
+  BasicChatRoute: typeof BasicChatRoute;
+  PersistenceRoute: typeof PersistenceRoute;
+  StreamingRoute: typeof StreamingRoute;
+  StructuredOutputRoute: typeof StructuredOutputRoute;
 }
 
 declare module "@tanstack/react-router" {
@@ -48,12 +96,53 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof IndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/basic-chat": {
+      id: "/basic-chat";
+      path: "/basic-chat";
+      fullPath: "/basic-chat";
+      preLoaderRoute: typeof BasicChatRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/persistence": {
+      id: "/persistence";
+      path: "/persistence";
+      fullPath: "/persistence";
+      preLoaderRoute: typeof PersistenceRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/streaming": {
+      id: "/streaming";
+      path: "/streaming";
+      fullPath: "/streaming";
+      preLoaderRoute: typeof StreamingRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/structured-output": {
+      id: "/structured-output";
+      path: "/structured-output";
+      fullPath: "/structured-output";
+      preLoaderRoute: typeof StructuredOutputRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BasicChatRoute: BasicChatRoute,
+  PersistenceRoute: PersistenceRoute,
+  StreamingRoute: StreamingRoute,
+  StructuredOutputRoute: StructuredOutputRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>();
+
+import type { getRouter } from "./router.tsx";
+import type { createStart } from "@tanstack/react-start";
+declare module "@tanstack/react-start" {
+  interface Register {
+    ssr: true;
+    router: Awaited<ReturnType<typeof getRouter>>;
+  }
+}
