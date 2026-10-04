@@ -7,6 +7,17 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
+import { useState } from "react";
+import { MenuIcon } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
 import appCss from "../styles.css?url";
@@ -46,7 +57,43 @@ const navLinks = [
   { to: "/streaming", label: "Streaming" },
   { to: "/persistence", label: "Persistence" },
   { to: "/structured-output", label: "Structured Output" },
+  { to: "/vercel-ai-streaming", label: "Vercel Streaming" },
 ] as const;
+
+function MobileNav() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <Button variant="ghost" size="icon" className="-mr-4 lg:hidden">
+          <MenuIcon />
+          <span className="sr-only">Open navigation</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left">
+        <SheetHeader>
+          <SheetTitle>TanStack AI Demo</SheetTitle>
+        </SheetHeader>
+        <nav className="flex flex-col gap-1 px-4">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={() => setOpen(false)}
+              className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
+              activeProps={{
+                className: "bg-accent text-foreground font-medium",
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+      </SheetContent>
+    </Sheet>
+  );
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
@@ -55,13 +102,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div className="flex min-h-screen flex-col">
-          <header className="border-b">
+        <div className="flex min-h-screen flex-col bg-muted">
+          <header className="border-b bg-background">
             <div className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-4">
+              <MobileNav />
               <Link to="/" className="font-semibold">
                 TanStack AI Demo
               </Link>
-              <nav className="flex gap-4 text-sm">
+              <nav className="hidden gap-4 text-sm lg:flex">
                 {navLinks.map((link) => (
                   <Link
                     key={link.to}
@@ -75,7 +123,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               </nav>
             </div>
           </header>
-          <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
+          <main className="mx-auto w-full max-w-5xl flex-1 border-x bg-background px-4 py-8 shadow-sm">
             {children}
           </main>
         </div>

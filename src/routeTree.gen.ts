@@ -8,122 +8,150 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as BasicChatRouteImport } from "./routes/basic-chat";
-import { Route as PersistenceRouteImport } from "./routes/persistence";
-import { Route as StreamingRouteImport } from "./routes/streaming";
-import { Route as StructuredOutputRouteImport } from "./routes/structured-output";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as BasicChatRouteImport } from './routes/basic-chat'
+import { Route as PersistenceRouteImport } from './routes/persistence'
+import { Route as StreamingRouteImport } from './routes/streaming'
+import { Route as StructuredOutputRouteImport } from './routes/structured-output'
+import { Route as VercelAiStreamingRouteImport } from './routes/vercel-ai-streaming'
 
 const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const BasicChatRoute = BasicChatRouteImport.update({
-  id: "/basic-chat",
-  path: "/basic-chat",
+  id: '/basic-chat',
+  path: '/basic-chat',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const PersistenceRoute = PersistenceRouteImport.update({
-  id: "/persistence",
-  path: "/persistence",
+  id: '/persistence',
+  path: '/persistence',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const StreamingRoute = StreamingRouteImport.update({
-  id: "/streaming",
-  path: "/streaming",
+  id: '/streaming',
+  path: '/streaming',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const StructuredOutputRoute = StructuredOutputRouteImport.update({
-  id: "/structured-output",
-  path: "/structured-output",
+  id: '/structured-output',
+  path: '/structured-output',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
+const VercelAiStreamingRoute = VercelAiStreamingRouteImport.update({
+  id: '/vercel-ai-streaming',
+  path: '/vercel-ai-streaming',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/basic-chat": typeof BasicChatRoute;
-  "/persistence": typeof PersistenceRoute;
-  "/streaming": typeof StreamingRoute;
-  "/structured-output": typeof StructuredOutputRoute;
+  '/': typeof IndexRoute
+  '/basic-chat': typeof BasicChatRoute
+  '/persistence': typeof PersistenceRoute
+  '/streaming': typeof StreamingRoute
+  '/structured-output': typeof StructuredOutputRoute
+  '/vercel-ai-streaming': typeof VercelAiStreamingRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/basic-chat": typeof BasicChatRoute;
-  "/persistence": typeof PersistenceRoute;
-  "/streaming": typeof StreamingRoute;
-  "/structured-output": typeof StructuredOutputRoute;
+  '/': typeof IndexRoute
+  '/basic-chat': typeof BasicChatRoute
+  '/persistence': typeof PersistenceRoute
+  '/streaming': typeof StreamingRoute
+  '/structured-output': typeof StructuredOutputRoute
+  '/vercel-ai-streaming': typeof VercelAiStreamingRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexRoute;
-  "/basic-chat": typeof BasicChatRoute;
-  "/persistence": typeof PersistenceRoute;
-  "/streaming": typeof StreamingRoute;
-  "/structured-output": typeof StructuredOutputRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/basic-chat': typeof BasicChatRoute
+  '/persistence': typeof PersistenceRoute
+  '/streaming': typeof StreamingRoute
+  '/structured-output': typeof StructuredOutputRoute
+  '/vercel-ai-streaming': typeof VercelAiStreamingRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    "/" | "/basic-chat" | "/persistence" | "/streaming" | "/structured-output";
-  fileRoutesByTo: FileRoutesByTo;
+    | '/'
+    | '/basic-chat'
+    | '/persistence'
+    | '/streaming'
+    | '/structured-output'
+    | '/vercel-ai-streaming'
+  fileRoutesByTo: FileRoutesByTo
   to:
-    "/" | "/basic-chat" | "/persistence" | "/streaming" | "/structured-output";
+    | '/'
+    | '/basic-chat'
+    | '/persistence'
+    | '/streaming'
+    | '/structured-output'
+    | '/vercel-ai-streaming'
   id:
-    | "__root__"
-    | "/"
-    | "/basic-chat"
-    | "/persistence"
-    | "/streaming"
-    | "/structured-output";
-  fileRoutesById: FileRoutesById;
+    | '__root__'
+    | '/'
+    | '/basic-chat'
+    | '/persistence'
+    | '/streaming'
+    | '/structured-output'
+    | '/vercel-ai-streaming'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  BasicChatRoute: typeof BasicChatRoute;
-  PersistenceRoute: typeof PersistenceRoute;
-  StreamingRoute: typeof StreamingRoute;
-  StructuredOutputRoute: typeof StructuredOutputRoute;
+  IndexRoute: typeof IndexRoute
+  BasicChatRoute: typeof BasicChatRoute
+  PersistenceRoute: typeof PersistenceRoute
+  StreamingRoute: typeof StreamingRoute
+  StructuredOutputRoute: typeof StructuredOutputRoute
+  VercelAiStreamingRoute: typeof VercelAiStreamingRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/basic-chat": {
-      id: "/basic-chat";
-      path: "/basic-chat";
-      fullPath: "/basic-chat";
-      preLoaderRoute: typeof BasicChatRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/persistence": {
-      id: "/persistence";
-      path: "/persistence";
-      fullPath: "/persistence";
-      preLoaderRoute: typeof PersistenceRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/streaming": {
-      id: "/streaming";
-      path: "/streaming";
-      fullPath: "/streaming";
-      preLoaderRoute: typeof StreamingRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/structured-output": {
-      id: "/structured-output";
-      path: "/structured-output";
-      fullPath: "/structured-output";
-      preLoaderRoute: typeof StructuredOutputRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/basic-chat': {
+      id: '/basic-chat'
+      path: '/basic-chat'
+      fullPath: '/basic-chat'
+      preLoaderRoute: typeof BasicChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persistence': {
+      id: '/persistence'
+      path: '/persistence'
+      fullPath: '/persistence'
+      preLoaderRoute: typeof PersistenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/streaming': {
+      id: '/streaming'
+      path: '/streaming'
+      fullPath: '/streaming'
+      preLoaderRoute: typeof StreamingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/structured-output': {
+      id: '/structured-output'
+      path: '/structured-output'
+      fullPath: '/structured-output'
+      preLoaderRoute: typeof StructuredOutputRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vercel-ai-streaming': {
+      id: '/vercel-ai-streaming'
+      path: '/vercel-ai-streaming'
+      fullPath: '/vercel-ai-streaming'
+      preLoaderRoute: typeof VercelAiStreamingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -133,16 +161,17 @@ const rootRouteChildren: RootRouteChildren = {
   PersistenceRoute: PersistenceRoute,
   StreamingRoute: StreamingRoute,
   StructuredOutputRoute: StructuredOutputRoute,
-};
+  VercelAiStreamingRoute: VercelAiStreamingRoute,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from "./router.tsx";
-import type { createStart } from "@tanstack/react-start";
-declare module "@tanstack/react-start" {
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
   interface Register {
-    ssr: true;
-    router: Awaited<ReturnType<typeof getRouter>>;
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
   }
 }
