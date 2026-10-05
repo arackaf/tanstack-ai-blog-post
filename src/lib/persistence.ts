@@ -50,7 +50,7 @@ function mapInterrupt(row: typeof chatInterrupts.$inferSelect): InterruptRecord 
 function createMessageStore(db: DB): MessageStore {
   return {
     async loadThread(threadId) {
-      console.log("\n\nPersisting LOAD THREAD\n\n", threadId);
+      console.log("\n\nPersisting LOAD THREAD", threadId);
       const rows = await db.select({ messagesJson: chatThreads.messagesJson }).from(chatThreads).where(eq(chatThreads.threadId, threadId)).limit(1);
       // Unknown thread is [], never null.
       return rows[0]?.messagesJson ?? [];
@@ -58,6 +58,10 @@ function createMessageStore(db: DB): MessageStore {
     // Full overwrite — `messages` is the complete authoritative transcript.
     async saveThread(threadId, messages) {
       console.log("\n\nPersisting SAVE THREAD\n\n");
+      messages.forEach((message) => {
+        console.log("\n\nmessage", message.content, "\n\n");
+      });
+      console.log("\n\nPersisting DONE ------ THREAD SAVED\n\n");
       const updatedAt = Date.now();
       await db
         .insert(chatThreads)

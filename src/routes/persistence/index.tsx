@@ -21,7 +21,7 @@ function BasicChat() {
     persistence: true,
   });
 
-  console.log("payload", payload);
+  //console.log("payload", payload);
   const { messages, sendMessage, isLoading } = payload;
   const handleGenerate = () => {
     sendMessage(prompt);

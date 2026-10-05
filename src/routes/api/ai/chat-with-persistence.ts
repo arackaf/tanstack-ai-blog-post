@@ -18,6 +18,7 @@ const testMiddleware: ChatMiddleware = {
     console.log(`[${ctx.requestId}] Finished in ${info.duration}ms`);
 
     ctx.messages.forEach((message) => {
+      message.content = "AAA" + message.content;
       console.log(message.id, message.role, message.content);
     });
   },
