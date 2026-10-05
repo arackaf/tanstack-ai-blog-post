@@ -7,5 +7,6 @@ export default defineConfig({
   dbCredentials: {
     url: connectionString,
   },
+  schema: "./src/drizzle/schema.ts",
   out: "./src/drizzle",
 });
