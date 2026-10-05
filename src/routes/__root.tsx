@@ -68,10 +68,7 @@ function MobileNav() {
               key={link.to}
               to={link.to}
               onClick={() => setOpen(false)}
-              className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
-              activeProps={{
-                className: "bg-accent text-foreground font-medium",
-              }}
+              className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground data-[status=active]:bg-accent data-[status=active]:font-medium data-[status=active]:text-foreground"
             >
               {link.label}
             </Link>
@@ -101,8 +98,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                   <Link
                     key={link.to}
                     to={link.to}
-                    className="text-muted-foreground hover:text-foreground"
-                    activeProps={{ className: "text-foreground font-medium" }}
+                    className="text-muted-foreground underline-offset-[1.125rem] decoration-2 hover:text-foreground data-[status=active]:font-medium data-[status=active]:text-foreground data-[status=active]:underline"
                   >
                     {link.label}
                   </Link>
