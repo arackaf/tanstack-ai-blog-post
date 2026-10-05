@@ -15,9 +15,14 @@ const MIN_PROMPT_LENGTH = 20;
 function BasicChat() {
   const [prompt, setPrompt] = useState("");
 
-  const { messages, sendMessage, isLoading } = useChat({
-    connection: fetchServerSentEvents("/api/ai/chat"),
+  const payload = useChat({
+    connection: fetchServerSentEvents("/api/ai/chat-with-persistence"),
+    threadId: "xxx",
+    persistence: true,
   });
+
+  console.log("payload", payload);
+  const { messages, sendMessage, isLoading } = payload;
   const handleGenerate = () => {
     sendMessage(prompt);
   };
