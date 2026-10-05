@@ -50,7 +50,7 @@ export const Route = createFileRoute("/api/ai/chat-with-persistence")({
           middleware: [testMiddleware, withPersistence(persistence)],
         });
 
-        return toServerSentEventsResponse(stream, { durability: { adapter: memoryStream(request), batch: 1 } });
+        return toServerSentEventsResponse(stream, { durability: { adapter: memoryStream(request) } });
         // return toServerSentEventsResponse(stream);
       },
     },
