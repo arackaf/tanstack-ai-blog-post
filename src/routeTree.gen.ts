@@ -15,6 +15,7 @@ import { Route as StructuredOutputRouteImport } from './routes/structured-output
 import { Route as PersistenceIndexRouteImport } from './routes/persistence/index'
 import { Route as PersistenceIdRouteImport } from './routes/persistence/$id'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai/chat'
+import { Route as ApiAiChatWithPersistenceRouteImport } from './routes/api/ai/chat-with-persistence'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -32,9 +33,9 @@ const StructuredOutputRoute = StructuredOutputRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const PersistenceIndexRoute = PersistenceIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PersistenceRoute,
+  id: '/persistence/',
+  path: '/persistence/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PersistenceIdRoute = PersistenceIdRouteImport.update({
   id: '/persistence/$id',
@@ -46,6 +47,12 @@ const ApiAiChatRoute = ApiAiChatRouteImport.update({
   path: '/api/ai/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiChatWithPersistenceRoute =
+  ApiAiChatWithPersistenceRouteImport.update({
+    id: '/api/ai/chat-with-persistence',
+    path: '/api/ai/chat-with-persistence',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByFullPath {
   '/persistence/$id': typeof PersistenceIdRoute
   '/persistence/': typeof PersistenceIndexRoute
   '/api/ai/chat': typeof ApiAiChatRoute
+  '/api/ai/chat-with-persistence': typeof ApiAiChatWithPersistenceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +70,7 @@ export interface FileRoutesByTo {
   '/persistence/$id': typeof PersistenceIdRoute
   '/persistence': typeof PersistenceIndexRoute
   '/api/ai/chat': typeof ApiAiChatRoute
+  '/api/ai/chat-with-persistence': typeof ApiAiChatWithPersistenceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +80,7 @@ export interface FileRoutesById {
   '/persistence/$id': typeof PersistenceIdRoute
   '/persistence/': typeof PersistenceIndexRoute
   '/api/ai/chat': typeof ApiAiChatRoute
+  '/api/ai/chat-with-persistence': typeof ApiAiChatWithPersistenceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +91,7 @@ export interface FileRouteTypes {
     | '/persistence/$id'
     | '/persistence/'
     | '/api/ai/chat'
+    | '/api/ai/chat-with-persistence'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +100,7 @@ export interface FileRouteTypes {
     | '/persistence/$id'
     | '/persistence'
     | '/api/ai/chat'
+    | '/api/ai/chat-with-persistence'
   id:
     | '__root__'
     | '/'
@@ -97,6 +109,7 @@ export interface FileRouteTypes {
     | '/persistence/$id'
     | '/persistence/'
     | '/api/ai/chat'
+    | '/api/ai/chat-with-persistence'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -104,7 +117,9 @@ export interface RootRouteChildren {
   BasicChatRoute: typeof BasicChatRoute
   StructuredOutputRoute: typeof StructuredOutputRoute
   PersistenceIdRoute: typeof PersistenceIdRoute
+  PersistenceIndexRoute: typeof PersistenceIndexRoute
   ApiAiChatRoute: typeof ApiAiChatRoute
+  ApiAiChatWithPersistenceRoute: typeof ApiAiChatWithPersistenceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -132,10 +147,10 @@ declare module '@tanstack/react-router' {
     }
     '/persistence/': {
       id: '/persistence/'
-      path: '/'
+      path: '/persistence'
       fullPath: '/persistence/'
       preLoaderRoute: typeof PersistenceIndexRouteImport
-      parentRoute: typeof PersistenceRoute
+      parentRoute: typeof rootRouteImport
     }
     '/persistence/$id': {
       id: '/persistence/$id'
@@ -151,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai/chat-with-persistence': {
+      id: '/api/ai/chat-with-persistence'
+      path: '/api/ai/chat-with-persistence'
+      fullPath: '/api/ai/chat-with-persistence'
+      preLoaderRoute: typeof ApiAiChatWithPersistenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -159,7 +181,9 @@ const rootRouteChildren: RootRouteChildren = {
   BasicChatRoute: BasicChatRoute,
   StructuredOutputRoute: StructuredOutputRoute,
   PersistenceIdRoute: PersistenceIdRoute,
+  PersistenceIndexRoute: PersistenceIndexRoute,
   ApiAiChatRoute: ApiAiChatRoute,
+  ApiAiChatWithPersistenceRoute: ApiAiChatWithPersistenceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
