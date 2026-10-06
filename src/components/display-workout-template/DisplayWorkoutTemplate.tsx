@@ -1,0 +1,31 @@
+import type { FC } from "react";
+
+import type { WorkoutTemplateState } from "@/data/workout-templates/workout-state";
+import { Card } from "@/components/Card";
+
+import { WorkoutTemplateSegment } from "./WorkoutTemplateSegment";
+
+type DisplayWorkoutTemplateProps = {
+  exerciseNameById: Map<number, string>;
+  workoutTemplate: WorkoutTemplateState;
+};
+
+export const DisplayWorkoutTemplate: FC<DisplayWorkoutTemplateProps> = ({ workoutTemplate }) => {
+  return (
+    <Card as="article">
+      <header className="mb-3 flex items-start justify-between gap-3">
+        <div>
+          <h3 className="text-lg font-semibold">{workoutTemplate.name}</h3>
+        </div>
+      </header>
+
+      {workoutTemplate.description ? <p className="mb-3 text-sm">{workoutTemplate.description}</p> : null}
+
+      <div className="flex flex-col gap-3">
+        {workoutTemplate.segments.map((segment, segmentIndex) => (
+          <WorkoutTemplateSegment key={`${segment.segmentOrder}-${segmentIndex}`} segment={segment} />
+        ))}
+      </div>
+    </Card>
+  );
+};
