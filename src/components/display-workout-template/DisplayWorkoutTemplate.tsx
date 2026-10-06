@@ -4,9 +4,10 @@ import type { WorkoutTemplateState } from "@/data/workout-templates/workout-stat
 import { Card } from "@/components/Card";
 
 import { WorkoutTemplateSegment } from "./WorkoutTemplateSegment";
+import type { DeepPartial } from "@tanstack/ai";
 
 type DisplayWorkoutTemplateProps = {
-  workoutTemplate: WorkoutTemplateState;
+  workoutTemplate: DeepPartial<WorkoutTemplateState>;
 };
 
 export const DisplayWorkoutTemplate: FC<DisplayWorkoutTemplateProps> = ({ workoutTemplate }) => {
