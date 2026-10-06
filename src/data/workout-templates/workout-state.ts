@@ -13,12 +13,12 @@ export type WorkoutTemplateState = Omit<WorkoutTemplate, "userId"> & {
   segments: TemplateSegmentWithExercises[];
 };
 
-export type TemplateSegmentWithExercises = WorkoutTemplateSegment & {
+export type TemplateSegmentWithExercises = Omit<WorkoutTemplateSegment, "workoutTemplateId"> & {
   id?: number;
   exercises: WorkoutTemplateSegmentExerciseState[];
 };
 
-export type WorkoutTemplateSegmentExerciseState = WorkoutTemplateSegmentExercise & {
+export type WorkoutTemplateSegmentExerciseState = Omit<WorkoutTemplateSegmentExercise, "workoutTemplateSegmentId" | "exerciseId"> & {
   id?: number;
   measurements: WorkoutTemplateSegmentExerciseMeasurementState[];
   exerciseName: string;

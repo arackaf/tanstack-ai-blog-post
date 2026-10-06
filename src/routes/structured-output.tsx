@@ -8,6 +8,9 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { fetchServerSentEvents, useChat, type UIMessage } from "@tanstack/ai-react";
 import { promptOutputSchema } from "#/lib/zod-schema";
+import type { WorkoutTemplateState } from "#/data/workout-templates/workout-state";
+import type { MessagePart, DeepPartial } from "@tanstack/ai";
+import { DisplayWorkoutTemplate } from "#/components/display-workout-template/DisplayWorkoutTemplate";
 
 export const Route = createFileRoute("/structured-output")({
   component: BasicChat,
@@ -54,9 +57,7 @@ function BasicChat() {
               {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
             </div>
           ) : (
-            <div key={message.id} className="w-full">
-              {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
-            </div>
+            <DisplayMessage key={message.id} message={message} />
           ),
         )}
         {isLoading && <Loader2 className="size-6 animate-spin text-muted-foreground" />}
@@ -75,13 +76,42 @@ function BasicChat() {
 }
 
 type DisplayMessageProps = {
-  message: UIMessage;
+  message: UIMessage<any, { commentary: string; workouts: WorkoutTemplateState[] }, undefined>;
 };
 const DisplayMessage: FC<DisplayMessageProps> = props => {
   const { message } = props;
+
   return (
     <div key={message.id} className="w-full">
-      {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
+      {message.parts.map((part, index) => (
+        <p key={index}>
+          <DisplayMessagePart part={part} />
+        </p>
+      ))}
     </div>
   );
+};
+
+type DisplayMessagePartProps = {
+  part: MessagePart<{ commentary: string; workouts: WorkoutTemplateState[] }>;
+};
+const DisplayMessagePart: FC<DisplayMessagePartProps> = props => {
+  const { part } = props;
+  if (part.type === "structured-output") {
+    if (!part.partial?.commentary) {
+      return null;
+    }
+    return (
+      <div className="flex flex-col gap-2">
+        {part.partial?.commentary && <span>{part.partial?.commentary}</span>}
+        {part.partial?.workouts?.map((workoutTemplate, idx) => (
+          <DisplayWorkoutTemplate key={idx} workoutTemplate={workoutTemplate as WorkoutTemplateState} />
+        ))}
+      </div>
+    );
+  }
+  if (part.type === "text") {
+    return <span>{part.content}</span>;
+  }
+  return null;
 };
