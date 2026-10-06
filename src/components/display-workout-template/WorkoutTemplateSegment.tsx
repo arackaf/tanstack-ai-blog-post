@@ -4,10 +4,9 @@ import type { TemplateSegmentWithExercises } from "@/data/workout-templates/work
 
 import { WorkoutTemplateSegmentExerciseReps } from "./WorkoutTemplateSegmentExerciseReps";
 import { InnerCard } from "@/components/InnerCard";
-import type { DeepPartial } from "@tanstack/ai";
 
 type WorkoutTemplateSegmentProps = {
-  segment: DeepPartial<TemplateSegmentWithExercises>;
+  segment: TemplateSegmentWithExercises;
 };
 
 export const WorkoutTemplateSegment: FC<WorkoutTemplateSegmentProps> = ({ segment }) => {
@@ -18,7 +17,7 @@ export const WorkoutTemplateSegment: FC<WorkoutTemplateSegmentProps> = ({ segmen
         {segment.exercises?.map((exercise, exerciseIndex) => (
           <span key={`${exercise.exerciseOrder}-${exerciseIndex}`}>
             {exercise.exerciseName}
-            {exerciseIndex < (segment.exercises?.length ?? 0) - 1 ? ", " : null}
+            {exerciseIndex < segment.exercises.length - 1 ? ", " : null}
           </span>
         ))}
       </p>

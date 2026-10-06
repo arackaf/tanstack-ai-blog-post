@@ -2,10 +2,9 @@ import type { FC } from "react";
 
 import type { TemplateSegmentWithExercises } from "@/data/workout-templates/workout-state";
 import { getDisplayReps } from "./DisplayReps";
-import type { DeepPartial } from "@tanstack/ai";
 
 type WorkoutTemplateSegmentRepsProps = {
-  segment: DeepPartial<TemplateSegmentWithExercises>;
+  segment: TemplateSegmentWithExercises;
 };
 
 export const WorkoutTemplateSegmentExerciseReps: FC<WorkoutTemplateSegmentRepsProps> = ({ segment }) => {
