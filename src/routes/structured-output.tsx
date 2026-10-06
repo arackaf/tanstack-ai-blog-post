@@ -19,7 +19,7 @@ function BasicChat() {
   const payload = useChat({
     connection: fetchServerSentEvents("/api/ai/chat-with-persistence"),
     threadId: "xxx",
-    // persistence: true,
+    persistence: true,
     outputSchema: promptOutputSchema,
   });
 

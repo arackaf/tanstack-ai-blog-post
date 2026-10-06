@@ -47,7 +47,7 @@ export const Route = createFileRoute("/api/ai/chat-with-persistence")({
           messages: params.messages,
           threadId: params.threadId,
           runId: params.runId,
-          //middleware: [testMiddleware, withPersistence(persistence)],
+          middleware: [testMiddleware, withPersistence(persistence)],
           outputSchema: promptOutputSchema,
           stream: true,
         });
