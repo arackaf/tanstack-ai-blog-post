@@ -84,9 +84,9 @@ const DisplayMessage: FC<DisplayMessageProps> = props => {
   return (
     <div key={message.id} className="w-full">
       {message.parts.map((part, index) => (
-        <p key={index}>
+        <div key={index}>
           <DisplayMessagePart part={part} />
-        </p>
+        </div>
       ))}
     </div>
   );
