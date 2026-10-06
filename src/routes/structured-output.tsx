@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { fetchServerSentEvents, useChat, type UIMessage } from "@tanstack/ai-react";
 import { promptOutputSchema } from "#/lib/zod-schema";
 import type { WorkoutTemplateState } from "#/data/workout-templates/workout-state";
-import type { MessagePart, DeepPartial } from "@tanstack/ai";
+import type { MessagePart } from "@tanstack/ai";
 import { DisplayWorkoutTemplate } from "#/components/display-workout-template/DisplayWorkoutTemplate";
 
 export const Route = createFileRoute("/structured-output")({
