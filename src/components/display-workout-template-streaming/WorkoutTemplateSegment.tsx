@@ -1,0 +1,28 @@
+import type { FC } from "react";
+
+import type { TemplateSegmentWithExercises } from "@/data/workout-templates/workout-state";
+
+import { WorkoutTemplateSegmentExerciseReps } from "./WorkoutTemplateSegmentExerciseReps";
+import { InnerCard } from "@/components/InnerCard";
+import type { DeepPartial } from "@tanstack/ai";
+
+type WorkoutTemplateSegmentProps = {
+  segment: DeepPartial<TemplateSegmentWithExercises>;
+};
+
+export const WorkoutTemplateSegment: FC<WorkoutTemplateSegmentProps> = ({ segment }) => {
+  return (
+    <InnerCard as="section">
+      <p className="text-sm font-medium">{segment.sets} sets</p>
+      <p className="mt-2 text-sm text-muted-foreground">
+        {segment.exercises?.map((exercise, exerciseIndex) => (
+          <span key={`${exercise.exerciseOrder}-${exerciseIndex}`}>
+            {exercise.exerciseName}
+            {exerciseIndex < (segment.exercises?.length ?? 0) - 1 ? ", " : null}
+          </span>
+        ))}
+      </p>
+      <WorkoutTemplateSegmentExerciseReps segment={segment} />
+    </InnerCard>
+  );
+};
