@@ -7,24 +7,24 @@ type DisplayRepsProps = {
 };
 
 const getDisplayMeasurement = (exercise: Exercise, measurement: Measurement) => {
-  if (exercise.executionType === undefined) {
+  if (!exercise.executionType) {
     return "";
   }
   if (exercise.executionType === "distance") {
-    if (measurement.distance === undefined || exercise.distanceUnit === undefined) {
+    if (!measurement.distance || !exercise.distanceUnit) {
       return "";
     }
     return `${measurement.distance} ${exercise.distanceUnit}`;
   }
 
   if (exercise.executionType === "time") {
-    if (measurement.duration === undefined || exercise.durationUnit === undefined) {
+    if (!measurement.duration || !exercise.durationUnit) {
       return "";
     }
     return `${measurement.duration}${exercise.durationUnit}`;
   }
 
-  if (measurement.reps === undefined && measurement.repsToFailure === undefined) {
+  if (!measurement.reps && !measurement.repsToFailure) {
     return "";
   }
   return `${measurement.weightUsed ? measurement.weightUsed + (!measurement.repsToFailure ? "x" : " ") : ""}${measurement.repsToFailure ? "To failure" : measurement.reps}`;
