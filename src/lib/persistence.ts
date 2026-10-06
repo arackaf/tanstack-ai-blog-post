@@ -58,7 +58,7 @@ function createMessageStore(db: DB): MessageStore {
     // Full overwrite — `messages` is the complete authoritative transcript.
     async saveThread(threadId, messages) {
       console.log("\n\nPersisting SAVE THREAD\n\n");
-      messages.forEach((message) => {
+      messages.forEach(message => {
         console.log("\n\nmessage", message.content, "\n\n");
       });
       console.log("\n\nPersisting DONE ------ THREAD SAVED\n\n");
@@ -220,10 +220,10 @@ function createInterruptStore(db: DB): InterruptStore {
       const rows = await db.select().from(chatInterrupts).where(eq(chatInterrupts.interruptId, interruptId)).limit(1);
       return rows[0] ? mapInterrupt(rows[0]) : null;
     },
-    list: (threadId) => listWhere(eq(chatInterrupts.threadId, threadId)),
-    listPending: (threadId) => listWhere(and(eq(chatInterrupts.threadId, threadId), eq(chatInterrupts.status, "pending"))),
-    listByRun: (runId) => listWhere(eq(chatInterrupts.runId, runId)),
-    listPendingByRun: (runId) => listWhere(and(eq(chatInterrupts.runId, runId), eq(chatInterrupts.status, "pending"))),
+    list: threadId => listWhere(eq(chatInterrupts.threadId, threadId)),
+    listPending: threadId => listWhere(and(eq(chatInterrupts.threadId, threadId), eq(chatInterrupts.status, "pending"))),
+    listByRun: runId => listWhere(eq(chatInterrupts.runId, runId)),
+    listPendingByRun: runId => listWhere(and(eq(chatInterrupts.runId, runId), eq(chatInterrupts.status, "pending"))),
   };
 }
 

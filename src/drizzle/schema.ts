@@ -48,7 +48,7 @@ export const chatRuns = pgTable(
     subagentRunId: text("subagent_run_id"),
     name: text("name"),
   },
-  (table) => [
+  table => [
     index("chat_runs_status_detached").on(table.status, table.detachedSince),
     index("chat_runs_thread_started").on(table.threadId, table.startedAt),
     index("chat_runs_parent_started").on(table.parentRunId, table.startedAt),
@@ -73,7 +73,7 @@ export const chatMetadata = pgTable(
     key: text("key").notNull(),
     valueJson: jsonb("value_json").$type<unknown>().notNull(),
   },
-  (table) => [primaryKey({ columns: [table.namespace, table.key] })],
+  table => [primaryKey({ columns: [table.namespace, table.key] })],
 );
 
 export const executionType = pgEnum("execution_type", ["repetition", "distance", "time"]);
@@ -105,7 +105,7 @@ export const account = pgTable(
       .notNull(),
     updatedAt: timestamp({ withTimezone: true }).notNull(),
   },
-  (table) => [index("account_userId_idx").using("btree", table.userId.asc().nullsLast())],
+  table => [index("account_userId_idx").using("btree", table.userId.asc().nullsLast())],
 );
 
 export const bodyCompositionMeasurement = pgTable("body_composition_measurement", {
@@ -139,7 +139,7 @@ export const exercises = pgTable(
     isBodyweight: boolean("is_bodyweight"),
     executionType: executionType("execution_type").notNull(),
   },
-  (table) => [index("idx_exercises_muscle_groups_gin").using("gin", table.muscleGroups.asc().nullsLast())],
+  table => [index("idx_exercises_muscle_groups_gin").using("gin", table.muscleGroups.asc().nullsLast())],
 );
 
 export const muscleGroup = pgTable(
@@ -149,7 +149,7 @@ export const muscleGroup = pgTable(
     userId: text().notNull(),
     name: varchar({ length: 50 }).notNull(),
   },
-  (table) => [unique("muscle_group_user_id_name_key").on(table.userId, table.name)],
+  table => [unique("muscle_group_user_id_name_key").on(table.userId, table.name)],
 );
 
 export const session = pgTable(
@@ -168,7 +168,7 @@ export const session = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
   },
-  (table) => [index("session_userId_idx").using("btree", table.userId.asc().nullsLast()), unique("session_token_key").on(table.token)],
+  table => [index("session_userId_idx").using("btree", table.userId.asc().nullsLast()), unique("session_token_key").on(table.token)],
 );
 
 export const user = pgTable(
@@ -186,7 +186,7 @@ export const user = pgTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
   },
-  (table) => [unique("user_email_key").on(table.email)],
+  table => [unique("user_email_key").on(table.email)],
 );
 
 export const userInfo = pgTable("user_info", {
@@ -210,7 +210,7 @@ export const verification = pgTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
   },
-  (table) => [index("verification_identifier_idx").using("btree", table.identifier.asc().nullsLast())],
+  table => [index("verification_identifier_idx").using("btree", table.identifier.asc().nullsLast())],
 );
 
 export const workout = pgTable(
@@ -223,7 +223,7 @@ export const workout = pgTable(
     workoutDate: text("workout_date").notNull(),
     workoutTemplateId: integer("workout_template_id"),
   },
-  (table) => [index("idx_workout_workout_date").using("btree", table.workoutDate.asc().nullsLast())],
+  table => [index("idx_workout_workout_date").using("btree", table.workoutDate.asc().nullsLast())],
 );
 
 export const workoutSegment = pgTable(
@@ -237,7 +237,7 @@ export const workoutSegment = pgTable(
     sets: integer().notNull(),
     workoutTemplateSegmentId: integer("workout_template_segment_id"),
   },
-  (table) => [
+  table => [
     index("idx_workout_segment_workout_id_segment_order").using("btree", table.workoutId.asc().nullsLast(), table.segmentOrder.asc().nullsLast()),
     check("workout_segment_segment_order_check", sql`(segment_order > 0)`),
     check("workout_segment_sets_check", sql`(sets > 0)`),
@@ -261,7 +261,7 @@ export const workoutSegmentExercise = pgTable(
     distanceUnit: distanceUnit("distance_unit"),
     workoutTemplateSegmentExerciseId: integer("workout_template_segment_exercise_id"),
   },
-  (table) => [
+  table => [
     index("idx_workout_segment_exercise_segment_id_exercise_order").using(
       "btree",
       table.workoutSegmentId.asc().nullsLast(),
@@ -280,7 +280,11 @@ export const workoutSegmentExerciseMeasurement = pgTable(
       .references(() => workoutSegmentExercise.id, { onDelete: "cascade" }),
     setOrder: integer("set_order").notNull(),
     reps: integer(),
-    weightUsed: numeric("weight_used", { precision: 8, scale: 2, mode: "number" }),
+    weightUsed: numeric("weight_used", {
+      precision: 8,
+      scale: 2,
+      mode: "number",
+    }),
     duration: numeric({ precision: 8, scale: 2, mode: "number" }),
     distance: numeric({ precision: 8, scale: 2, mode: "number" }),
     workoutTemplateSegmentExerciseMeasurementId: integer("workout_template_segment_exercise_measurement_id"),
@@ -290,7 +294,7 @@ export const workoutSegmentExerciseMeasurement = pgTable(
     templateDistance: varchar("template_distance", { length: 50 }),
     templateRepsToFailure: boolean("template_reps_to_failure"),
   },
-  (table) => [
+  table => [
     index("idx_workout_segment_exercise_measurement_exercise_id_set_order").using(
       "btree",
       table.workoutSegmentExerciseId.asc().nullsLast(),
@@ -317,7 +321,7 @@ export const workoutTemplateSegment = pgTable(
     segmentOrder: integer("segment_order").notNull(),
     sets: integer().notNull(),
   },
-  (table) => [
+  table => [
     index("idx_workout_template_segment_template_id_segment_order").using(
       "btree",
       table.workoutTemplateId.asc().nullsLast(),
@@ -344,7 +348,7 @@ export const workoutTemplateSegmentExercise = pgTable(
     durationUnit: durationUnit("duration_unit"),
     distanceUnit: distanceUnit("distance_unit"),
   },
-  (table) => [
+  table => [
     index("idx_workout_template_segment_exercise_segment_id_exercise_order").using(
       "btree",
       table.workoutTemplateSegmentId.asc().nullsLast(),
@@ -360,7 +364,9 @@ export const workoutTemplateSegmentExerciseMeasurement = pgTable(
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     workoutTemplateSegmentExerciseId: integer("workout_template_segment_exercise_id")
       .notNull()
-      .references(() => workoutTemplateSegmentExercise.id, { onDelete: "cascade" }),
+      .references(() => workoutTemplateSegmentExercise.id, {
+        onDelete: "cascade",
+      }),
     setOrder: integer("set_order").notNull(),
     reps: varchar({ length: 50 }),
     repsToFailure: boolean("reps_to_failure"),
@@ -368,5 +374,5 @@ export const workoutTemplateSegmentExerciseMeasurement = pgTable(
     duration: varchar({ length: 50 }),
     distance: varchar({ length: 50 }),
   },
-  (table) => [check("workout_template_segment_exercise_measurement_set_order_check", sql`(set_order > 0)`)],
+  table => [check("workout_template_segment_exercise_measurement_set_order_check", sql`(set_order > 0)`)],
 );

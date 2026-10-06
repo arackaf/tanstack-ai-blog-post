@@ -5,7 +5,7 @@ type InnerCardProps = {
   as?: keyof JSX.IntrinsicElements;
 } & HtmlHTMLAttributes<any>;
 
-export const InnerCard: FC<InnerCardProps> = (props) => {
+export const InnerCard: FC<InnerCardProps> = props => {
   const { children, as = "div", className = "", ...rest } = props;
   const Comp = as;
   return (

@@ -9,7 +9,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { fetchServerSentEvents, useChat, type UIMessage } from "@tanstack/ai-react";
 import { promptOutputSchema } from "#/lib/zod-schema";
 
-export const Route = createFileRoute("/structured-output")({ component: BasicChat });
+export const Route = createFileRoute("/structured-output")({
+  component: BasicChat,
+});
 
 const MIN_PROMPT_LENGTH = 20;
 
@@ -46,7 +48,7 @@ function BasicChat() {
       <h1 className="text-2xl font-bold">Basic Chat</h1>
 
       <div className="flex flex-col gap-4">
-        {messages.map((message) =>
+        {messages.map(message =>
           message.role === "user" ? (
             <div key={message.id} className="w-1/2 self-end rounded-2xl bg-blue-100 px-4 py-2">
               {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
@@ -62,7 +64,7 @@ function BasicChat() {
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="prompt">Prompt</Label>
-        <Textarea id="prompt" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
+        <Textarea id="prompt" value={prompt} onChange={e => setPrompt(e.target.value)} />
         {prompt.length > 0 && charactersRemaining > 0 && <p className="text-sm text-muted-foreground">{charactersRemaining} more characters</p>}
       </div>
       <Button className="self-start" onClick={handleGenerate} disabled={isLoading || charactersRemaining > 0}>
@@ -75,7 +77,7 @@ function BasicChat() {
 type DisplayMessageProps = {
   message: UIMessage;
 };
-const DisplayMessage: FC<DisplayMessageProps> = (props) => {
+const DisplayMessage: FC<DisplayMessageProps> = props => {
   const { message } = props;
   return (
     <div key={message.id} className="w-full">

@@ -6,7 +6,7 @@ type CardProps = {
   hoverStyle?: "border";
 } & HtmlHTMLAttributes<any>;
 
-export const Card: FC<CardProps> = (props) => {
+export const Card: FC<CardProps> = props => {
   const { children, as = "div", className = "", hoverStyle, ...rest } = props;
   const Comp = as;
   return (

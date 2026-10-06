@@ -63,7 +63,7 @@ function MobileNav() {
           <SheetTitle>TanStack AI Demo</SheetTitle>
         </SheetHeader>
         <nav className="flex flex-col gap-1 px-4">
-          {navLinks.map((link) => (
+          {navLinks.map(link => (
             <Link
               key={link.to}
               to={link.to}
@@ -94,7 +94,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 TanStack AI Demo
               </Link>
               <nav className="hidden gap-4 text-sm lg:flex">
-                {navLinks.map((link) => (
+                {navLinks.map(link => (
                   <Link
                     key={link.to}
                     to={link.to}

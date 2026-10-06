@@ -19,15 +19,15 @@ const getDisplayMeasurement = (exercise: Exercise, measurement: Measurement) => 
 };
 
 export const getDisplayReps = (segment: TemplateSegmentWithExercises) => {
-  if (segment.exercises.every((exercise) => exercise.measurements.every((measurement) => measurement.repsToFailure && !measurement.weightUsed))) {
+  if (segment.exercises.every(exercise => exercise.measurements.every(measurement => measurement.repsToFailure && !measurement.weightUsed))) {
     return "To failure";
   }
 
-  const measurementDisplayByExercise = segment.exercises.map((exercise) =>
-    exercise.measurements.map((measurement) => getDisplayMeasurement(exercise, measurement)),
+  const measurementDisplayByExercise = segment.exercises.map(exercise =>
+    exercise.measurements.map(measurement => getDisplayMeasurement(exercise, measurement)),
   );
 
-  const maxSetCount = Math.max(...measurementDisplayByExercise.map((values) => values.length), 0);
+  const maxSetCount = Math.max(...measurementDisplayByExercise.map(values => values.length), 0);
 
   if (segment.exercises.length === 1) {
     return Array.from({ length: maxSetCount }, (_, index) => {
@@ -36,14 +36,14 @@ export const getDisplayReps = (segment: TemplateSegmentWithExercises) => {
   }
 
   return Array.from({ length: maxSetCount }, (_, setIndex) => {
-    const measurementsForSet = measurementDisplayByExercise.map((values) => values[setIndex] ?? null);
-    const hasAnyMeasurementValue = measurementsForSet.some((value) => value !== null);
+    const measurementsForSet = measurementDisplayByExercise.map(values => values[setIndex] ?? null);
+    const hasAnyMeasurementValue = measurementsForSet.some(value => value !== null);
 
     if (!hasAnyMeasurementValue) {
       return "";
     }
 
-    return `(${measurementsForSet.map((value) => value ?? "_").join(", ")})`;
+    return `(${measurementsForSet.map(value => value ?? "_").join(", ")})`;
   })
     .filter(Boolean)
     .join(", ");

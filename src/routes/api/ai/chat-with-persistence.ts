@@ -52,7 +52,9 @@ export const Route = createFileRoute("/api/ai/chat-with-persistence")({
           stream: true,
         });
 
-        return toServerSentEventsResponse(stream, { durability: { adapter: memoryStream(request) } });
+        return toServerSentEventsResponse(stream, {
+          durability: { adapter: memoryStream(request) },
+        });
         // return toServerSentEventsResponse(stream);
       },
     },
