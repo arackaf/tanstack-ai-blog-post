@@ -10,7 +10,7 @@ import { fetchServerSentEvents, useChat, type UIMessage } from "@tanstack/ai-rea
 import { promptOutputSchema } from "#/lib/zod-schema";
 import type { WorkoutTemplateState } from "#/data/workout-templates/workout-state";
 import type { MessagePart } from "@tanstack/ai";
-import { DisplayWorkoutTemplate } from "#/components/display-workout-template/DisplayWorkoutTemplate";
+import { DisplayWorkoutTemplate as DisplayWorkoutTemplateStreaming } from "#/components/display-workout-template-streaming/DisplayWorkoutTemplate";
 
 export const Route = createFileRoute("/structured-output")({
   component: BasicChat,
@@ -105,7 +105,7 @@ const DisplayMessagePart: FC<DisplayMessagePartProps> = props => {
       <div className="flex flex-col gap-2">
         {part.partial?.commentary && <span>{part.partial?.commentary}</span>}
         {part.partial?.workouts?.map((workoutTemplate, idx) => (
-          <DisplayWorkoutTemplate key={idx} workoutTemplate={workoutTemplate as WorkoutTemplateState} />
+          <DisplayWorkoutTemplateStreaming key={idx} workoutTemplate={workoutTemplate as WorkoutTemplateState} />
         ))}
       </div>
     );
