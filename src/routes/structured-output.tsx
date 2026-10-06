@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
+import { fetchServerSentEvents, useChat, type UIMessage } from "@tanstack/ai-react";
 import { promptOutputSchema } from "#/lib/zod-schema";
 
 export const Route = createFileRoute("/structured-output")({ component: BasicChat });
@@ -71,3 +71,15 @@ function BasicChat() {
     </div>
   );
 }
+
+type DisplayMessageProps = {
+  message: UIMessage;
+};
+const DisplayMessage: FC<DisplayMessageProps> = (props) => {
+  const { message } = props;
+  return (
+    <div key={message.id} className="w-full">
+      {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
+    </div>
+  );
+};
