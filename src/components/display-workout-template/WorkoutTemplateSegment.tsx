@@ -17,7 +17,7 @@ export const WorkoutTemplateSegment: FC<WorkoutTemplateSegmentProps> = ({ segmen
         {segment.exercises?.map((exercise, exerciseIndex) => (
           <span key={`${exercise.exerciseOrder}-${exerciseIndex}`}>
             {exercise.exerciseName}
-            {exerciseIndex < segment.exercises?.length - 1 ? ", " : null}
+            {exerciseIndex < segment.exercises.length - 1 ? ", " : null}
           </span>
         ))}
       </p>
