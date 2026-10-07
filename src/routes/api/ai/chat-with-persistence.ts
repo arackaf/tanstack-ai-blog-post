@@ -1,28 +1,9 @@
-import {
-  chat,
-  chatParamsFromRequest,
-  toServerSentEventsResponse,
-  type ChatMiddleware,
-  memoryStream,
-  resumeServerSentEventsResponse,
-} from "@tanstack/ai";
+import { chat, chatParamsFromRequest, toServerSentEventsResponse, memoryStream, resumeServerSentEventsResponse } from "@tanstack/ai";
 import { vercelGatewayText } from "@tanstack/ai-vercel-gateway";
 import { createFileRoute } from "@tanstack/react-router";
 import { reconstructChat, withPersistence } from "@tanstack/ai-persistence";
 import { persistence } from "#/lib/persistence";
 import { promptOutputSchema } from "#/lib/zod-schema";
-
-const testMiddleware: ChatMiddleware = {
-  name: "logger",
-
-  onFinish: (ctx, info) => {
-    // console.log(`[${ctx.requestId}] Finished in ${info.duration}ms`);
-    // ctx.messages.forEach((message) => {
-    //   message.content = message.content;
-    //   console.log(message.id, message.role, message.content);
-    // });
-  },
-};
 
 export const Route = createFileRoute("/api/ai/chat-with-persistence")({
   server: {
@@ -47,7 +28,7 @@ export const Route = createFileRoute("/api/ai/chat-with-persistence")({
           messages: params.messages,
           threadId: params.threadId,
           runId: params.runId,
-          middleware: [testMiddleware, withPersistence(persistence)],
+          middleware: [withPersistence(persistence)],
           outputSchema: promptOutputSchema,
           stream: true,
         });

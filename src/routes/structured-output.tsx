@@ -28,9 +28,6 @@ function BasicChat() {
     outputSchema: promptOutputSchema,
   });
 
-  console.log({ payload });
-
-  //console.log("payload", payload);
   const { messages, sendMessage, isLoading } = payload;
   const handleGenerate = () => {
     sendMessage(prompt);
