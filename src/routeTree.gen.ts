@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BasicChatRouteImport } from './routes/basic-chat'
 import { Route as BasicChatWithPersistenceRouteImport } from './routes/basic-chat-with-persistence'
-import { Route as BasicChatWithPersistenceAndResumabilityRouteImport } from './routes/basic-chat-with-persistence-and-resumability'
 import { Route as NonStreamingChatRouteImport } from './routes/non-streaming-chat'
 import { Route as StructuredOutputRouteImport } from './routes/structured-output'
 import { Route as PersistenceIndexRouteImport } from './routes/persistence/index'
@@ -35,12 +34,6 @@ const BasicChatWithPersistenceRoute =
   BasicChatWithPersistenceRouteImport.update({
     id: '/basic-chat-with-persistence',
     path: '/basic-chat-with-persistence',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const BasicChatWithPersistenceAndResumabilityRoute =
-  BasicChatWithPersistenceAndResumabilityRouteImport.update({
-    id: '/basic-chat-with-persistence-and-resumability',
-    path: '/basic-chat-with-persistence-and-resumability',
     getParentRoute: () => rootRouteImport,
   } as any)
 const NonStreamingChatRoute = NonStreamingChatRouteImport.update({
@@ -84,7 +77,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/basic-chat': typeof BasicChatRoute
   '/basic-chat-with-persistence': typeof BasicChatWithPersistenceRoute
-  '/basic-chat-with-persistence-and-resumability': typeof BasicChatWithPersistenceAndResumabilityRoute
   '/non-streaming-chat': typeof NonStreamingChatRoute
   '/structured-output': typeof StructuredOutputRoute
   '/persistence/$id': typeof PersistenceIdRoute
@@ -97,7 +89,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/basic-chat': typeof BasicChatRoute
   '/basic-chat-with-persistence': typeof BasicChatWithPersistenceRoute
-  '/basic-chat-with-persistence-and-resumability': typeof BasicChatWithPersistenceAndResumabilityRoute
   '/non-streaming-chat': typeof NonStreamingChatRoute
   '/structured-output': typeof StructuredOutputRoute
   '/persistence/$id': typeof PersistenceIdRoute
@@ -111,7 +102,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/basic-chat': typeof BasicChatRoute
   '/basic-chat-with-persistence': typeof BasicChatWithPersistenceRoute
-  '/basic-chat-with-persistence-and-resumability': typeof BasicChatWithPersistenceAndResumabilityRoute
   '/non-streaming-chat': typeof NonStreamingChatRoute
   '/structured-output': typeof StructuredOutputRoute
   '/persistence/$id': typeof PersistenceIdRoute
@@ -126,7 +116,6 @@ export interface FileRouteTypes {
     | '/'
     | '/basic-chat'
     | '/basic-chat-with-persistence'
-    | '/basic-chat-with-persistence-and-resumability'
     | '/non-streaming-chat'
     | '/structured-output'
     | '/persistence/$id'
@@ -139,7 +128,6 @@ export interface FileRouteTypes {
     | '/'
     | '/basic-chat'
     | '/basic-chat-with-persistence'
-    | '/basic-chat-with-persistence-and-resumability'
     | '/non-streaming-chat'
     | '/structured-output'
     | '/persistence/$id'
@@ -152,7 +140,6 @@ export interface FileRouteTypes {
     | '/'
     | '/basic-chat'
     | '/basic-chat-with-persistence'
-    | '/basic-chat-with-persistence-and-resumability'
     | '/non-streaming-chat'
     | '/structured-output'
     | '/persistence/$id'
@@ -166,7 +153,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BasicChatRoute: typeof BasicChatRoute
   BasicChatWithPersistenceRoute: typeof BasicChatWithPersistenceRoute
-  BasicChatWithPersistenceAndResumabilityRoute: typeof BasicChatWithPersistenceAndResumabilityRoute
   NonStreamingChatRoute: typeof NonStreamingChatRoute
   StructuredOutputRoute: typeof StructuredOutputRoute
   PersistenceIdRoute: typeof PersistenceIdRoute
@@ -197,13 +183,6 @@ declare module '@tanstack/react-router' {
       path: '/basic-chat-with-persistence'
       fullPath: '/basic-chat-with-persistence'
       preLoaderRoute: typeof BasicChatWithPersistenceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/basic-chat-with-persistence-and-resumability': {
-      id: '/basic-chat-with-persistence-and-resumability'
-      path: '/basic-chat-with-persistence-and-resumability'
-      fullPath: '/basic-chat-with-persistence-and-resumability'
-      preLoaderRoute: typeof BasicChatWithPersistenceAndResumabilityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/non-streaming-chat': {
@@ -262,8 +241,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BasicChatRoute: BasicChatRoute,
   BasicChatWithPersistenceRoute: BasicChatWithPersistenceRoute,
-  BasicChatWithPersistenceAndResumabilityRoute:
-    BasicChatWithPersistenceAndResumabilityRoute,
   NonStreamingChatRoute: NonStreamingChatRoute,
   StructuredOutputRoute: StructuredOutputRoute,
   PersistenceIdRoute: PersistenceIdRoute,
