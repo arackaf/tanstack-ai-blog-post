@@ -11,6 +11,7 @@ import { promptOutputSchema } from "#/lib/zod-schema";
 import type { WorkoutTemplateState } from "#/data/workout-templates/workout-state";
 import type { MessagePart } from "@tanstack/ai";
 import { DisplayWorkoutTemplate as DisplayWorkoutTemplateStreaming } from "#/components/display-workout-template-streaming/DisplayWorkoutTemplate";
+import { DisplayWorkoutTemplate } from "#/components/display-workout-template/DisplayWorkoutTemplate";
 
 export const Route = createFileRoute("/structured-output")({
   component: BasicChat,
@@ -95,6 +96,22 @@ type DisplayMessagePartProps = {
 const DisplayMessagePart: FC<DisplayMessagePartProps> = props => {
   const { part } = props;
   if (part.type === "structured-output") {
+    if (part.status === "complete") {
+      if (part.data == null) {
+        // problem generating output
+        return null;
+      }
+      return (
+        <div className="flex flex-col gap-2">
+          DONE
+          <span>{part.partial?.commentary}</span>
+          {part.data.workouts.map(workoutTemplate => (
+            <DisplayWorkoutTemplate workoutTemplate={workoutTemplate} />
+          ))}
+        </div>
+      );
+    }
+
     if (!part.partial?.commentary) {
       return null;
     }
