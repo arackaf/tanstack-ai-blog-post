@@ -3,7 +3,6 @@ import { vercelGatewayText } from "@tanstack/ai-vercel-gateway";
 import { createFileRoute } from "@tanstack/react-router";
 import { reconstructChat, withPersistence } from "@tanstack/ai-persistence";
 import { persistence } from "#/lib/persistence";
-import { promptOutputSchema } from "#/lib/zod-schema";
 
 export const Route = createFileRoute("/api/ai/chat-with-persistence")({
   server: {
@@ -27,9 +26,7 @@ export const Route = createFileRoute("/api/ai/chat-with-persistence")({
           adapter: vercelGatewayText("anthropic/claude-opus-5"),
           messages: params.messages,
           threadId: params.threadId,
-          runId: params.runId,
           middleware: [withPersistence(persistence)],
-          outputSchema: promptOutputSchema,
           stream: true,
         });
 
