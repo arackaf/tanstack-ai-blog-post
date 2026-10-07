@@ -42,9 +42,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 const navLinks = [
-  { to: "/basic-chat", label: "Basic Chat" },
+  { to: "/non-streaming-chat", label: "Non-streaming chat" },
+  { to: "/basic-chat", label: "Basic chat" },
   { to: "/persistence", label: "Persistence" },
-  { to: "/structured-output", label: "Structured Output" },
+  { to: "/structured-output", label: "Structured output" },
 ] as const;
 
 function MobileNav() {
