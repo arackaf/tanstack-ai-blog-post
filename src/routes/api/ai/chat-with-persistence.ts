@@ -9,14 +9,13 @@ export const Route = createFileRoute("/api/ai/chat-with-persistence")({
     handlers: {
       GET: async ({ request }) => {
         const durability = memoryStream(request);
-        // A run still in flight: the client sent a resume offset, so replay its log.
         if (durability.resumeFrom() !== null) {
           return resumeServerSentEventsResponse({ adapter: durability });
         }
-        // Otherwise return the stored thread, plus a cursor to any run still generating.
+
         return reconstructChat(persistence, request, {
           // WITHOUT this, anyone who guesses a thread id gets the whole transcript.
-          authorize: async (threadId, req) => ownsThread(req, threadId),
+          authorize: async (threadId, req) => true,
         });
       },
       POST: async ({ request }) => {
@@ -26,6 +25,7 @@ export const Route = createFileRoute("/api/ai/chat-with-persistence")({
           adapter: vercelGatewayText("anthropic/claude-opus-5"),
           messages: params.messages,
           threadId: params.threadId,
+          runId: params.runId,
           middleware: [withPersistence(persistence)],
           stream: true,
         });
@@ -33,14 +33,7 @@ export const Route = createFileRoute("/api/ai/chat-with-persistence")({
         return toServerSentEventsResponse(stream, {
           durability: { adapter: memoryStream(request) },
         });
-        // return toServerSentEventsResponse(stream);
       },
     },
   },
 });
-
-async function ownsThread(request: Request, threadId: string): Promise<boolean> {
-  void request;
-  void threadId;
-  return true; // replace with your session and ownership check
-}

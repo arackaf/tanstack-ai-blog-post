@@ -15,7 +15,7 @@ const MIN_PROMPT_LENGTH = 20;
 function BasicChat() {
   const [prompt, setPrompt] = useState("");
 
-  const { messages, sendMessage, isLoading } = useChat({
+  const { messages, sendMessage, isLoading, isHydrating } = useChat({
     connection: fetchServerSentEvents("/api/ai/chat-with-persistence"),
     persistence: true,
     threadId: "123",
@@ -34,9 +34,11 @@ function BasicChat() {
 
   const charactersRemaining = MIN_PROMPT_LENGTH - prompt.length;
 
+  console.log("isHydrating", isHydrating);
+
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold">Basic Chat</h1>
+      <h1 className="text-2xl font-bold">Basic Chat {isHydrating ? <span>xxx</span> : null}</h1>
 
       <div className="flex flex-col gap-4">
         {messages.map(message =>
