@@ -97,14 +97,9 @@ const DisplayMessagePart: FC<DisplayMessagePartProps> = props => {
   const { part } = props;
   if (part.type === "structured-output") {
     if (part.status === "complete") {
-      if (part.data == null) {
-        // problem generating output
-        return null;
-      }
       return (
         <div className="flex flex-col gap-2">
-          DONE
-          <span>{part.partial?.commentary}</span>
+          <span>{part.data.commentary}</span>
           {part.data.workouts.map(workoutTemplate => (
             <DisplayWorkoutTemplate workoutTemplate={workoutTemplate} />
           ))}
