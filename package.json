@@ -16,10 +16,10 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
-    "@tanstack/ai": "^0.65.0",
+    "@tanstack/ai": "^0.65.1",
     "@tanstack/ai-persistence": "^0.8.0",
-    "@tanstack/ai-react": "^0.29.5",
-    "@tanstack/ai-vercel-gateway": "^0.3.4",
+    "@tanstack/ai-react": "^0.30.0",
+    "@tanstack/ai-vercel-gateway": "^0.3.5",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-query": "latest",
     "@tanstack/react-query-devtools": "latest",
