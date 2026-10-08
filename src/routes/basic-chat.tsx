@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
+import { fetchJson, useChat } from "@tanstack/ai-react";
 
 export const Route = createFileRoute("/basic-chat")({ component: BasicChat });
 
@@ -16,7 +16,7 @@ function BasicChat() {
   const [prompt, setPrompt] = useState("");
 
   const { messages, sendMessage, isLoading } = useChat({
-    connection: fetchServerSentEvents("/api/ai/chat"),
+    connection: fetchJson("/api/ai/chat-no-streaming"),
   });
   const handleGenerate = () => {
     sendMessage(prompt);

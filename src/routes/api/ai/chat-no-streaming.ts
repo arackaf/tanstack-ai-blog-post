@@ -1,4 +1,4 @@
-import { chat, toServerSentEventsResponse } from "@tanstack/ai";
+import { chat, toJsonResponse } from "@tanstack/ai";
 import { vercelGatewayText } from "@tanstack/ai-vercel-gateway";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -8,12 +8,13 @@ export const Route = createFileRoute("/api/ai/chat-no-streaming")({
       POST: async ({ request }) => {
         const { messages } = await request.json();
 
-        const stream = chat({
+        const stream = await chat({
           adapter: vercelGatewayText("anthropic/claude-opus-5"),
           messages,
+          stream: false,
         });
 
-        return toServerSentEventsResponse(stream);
+        return toJsonResponse(stream);
       },
     },
   },
