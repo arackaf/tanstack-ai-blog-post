@@ -44,7 +44,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 const navLinks = [
   { to: "/basic-chat", label: "Chat" },
   { to: "/basic-chat-with-persistence", label: "Persisted chat" },
-  { to: "/persistence", label: "Persistence" },
   { to: "/structured-output", label: "Structured output" },
 ] as const;
 
