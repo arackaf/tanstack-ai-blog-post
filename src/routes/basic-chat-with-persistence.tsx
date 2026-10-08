@@ -34,12 +34,10 @@ function BasicChat() {
 
   const charactersRemaining = MIN_PROMPT_LENGTH - prompt.length;
 
-  console.log("isHydrating", isHydrating);
-
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold flex items-center gap-2">
-        Basic Chat {isHydrating ? <Loader2 className="size-6 animate-spin text-muted-foreground" /> : null}
+        Persisted Chat {isHydrating ? <Loader2 className="size-6 animate-spin text-muted-foreground" /> : null}
       </h1>
 
       <div className="flex flex-col gap-4">

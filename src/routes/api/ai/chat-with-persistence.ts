@@ -27,7 +27,6 @@ export const Route = createFileRoute("/api/ai/chat-with-persistence")({
           threadId: params.threadId,
           runId: params.runId,
           middleware: [withPersistence(persistence)],
-          stream: true,
         });
 
         return toServerSentEventsResponse(stream, {
