@@ -10,7 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as BasicChatRouteImport } from './routes/basic-chat'
+import { Route as BasicChatStreamingRouteImport } from './routes/basic-chat-streaming'
 import { Route as BasicChatWithPersistenceRouteImport } from './routes/basic-chat-with-persistence'
 import { Route as NonStreamingChatRouteImport } from './routes/non-streaming-chat'
 import { Route as StructuredOutputRouteImport } from './routes/structured-output'
@@ -23,9 +23,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BasicChatRoute = BasicChatRouteImport.update({
-  id: '/basic-chat',
-  path: '/basic-chat',
+const BasicChatStreamingRoute = BasicChatStreamingRouteImport.update({
+  id: '/basic-chat-streaming',
+  path: '/basic-chat-streaming',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BasicChatWithPersistenceRoute =
@@ -63,7 +63,7 @@ const ApiAiChatWithPersistenceRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/basic-chat': typeof BasicChatRoute
+  '/basic-chat-streaming': typeof BasicChatStreamingRoute
   '/basic-chat-with-persistence': typeof BasicChatWithPersistenceRoute
   '/non-streaming-chat': typeof NonStreamingChatRoute
   '/structured-output': typeof StructuredOutputRoute
@@ -73,7 +73,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/basic-chat': typeof BasicChatRoute
+  '/basic-chat-streaming': typeof BasicChatStreamingRoute
   '/basic-chat-with-persistence': typeof BasicChatWithPersistenceRoute
   '/non-streaming-chat': typeof NonStreamingChatRoute
   '/structured-output': typeof StructuredOutputRoute
@@ -84,7 +84,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/basic-chat': typeof BasicChatRoute
+  '/basic-chat-streaming': typeof BasicChatStreamingRoute
   '/basic-chat-with-persistence': typeof BasicChatWithPersistenceRoute
   '/non-streaming-chat': typeof NonStreamingChatRoute
   '/structured-output': typeof StructuredOutputRoute
@@ -96,7 +96,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/basic-chat'
+    | '/basic-chat-streaming'
     | '/basic-chat-with-persistence'
     | '/non-streaming-chat'
     | '/structured-output'
@@ -106,7 +106,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/basic-chat'
+    | '/basic-chat-streaming'
     | '/basic-chat-with-persistence'
     | '/non-streaming-chat'
     | '/structured-output'
@@ -116,7 +116,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/basic-chat'
+    | '/basic-chat-streaming'
     | '/basic-chat-with-persistence'
     | '/non-streaming-chat'
     | '/structured-output'
@@ -127,7 +127,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BasicChatRoute: typeof BasicChatRoute
+  BasicChatStreamingRoute: typeof BasicChatStreamingRoute
   BasicChatWithPersistenceRoute: typeof BasicChatWithPersistenceRoute
   NonStreamingChatRoute: typeof NonStreamingChatRoute
   StructuredOutputRoute: typeof StructuredOutputRoute
@@ -145,11 +145,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/basic-chat': {
-      id: '/basic-chat'
-      path: '/basic-chat'
-      fullPath: '/basic-chat'
-      preLoaderRoute: typeof BasicChatRouteImport
+    '/basic-chat-streaming': {
+      id: '/basic-chat-streaming'
+      path: '/basic-chat-streaming'
+      fullPath: '/basic-chat-streaming'
+      preLoaderRoute: typeof BasicChatStreamingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/basic-chat-with-persistence': {
@@ -199,7 +199,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BasicChatRoute: BasicChatRoute,
+  BasicChatStreamingRoute: BasicChatStreamingRoute,
   BasicChatWithPersistenceRoute: BasicChatWithPersistenceRoute,
   NonStreamingChatRoute: NonStreamingChatRoute,
   StructuredOutputRoute: StructuredOutputRoute,
