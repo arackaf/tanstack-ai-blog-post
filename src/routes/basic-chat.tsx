@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
 
-export const Route = createFileRoute("/non-streaming-chat")({ component: BasicChat });
+export const Route = createFileRoute("/basic-chat")({ component: BasicChat });
 
 const MIN_PROMPT_LENGTH = 20;
 
@@ -16,11 +16,13 @@ function BasicChat() {
   const [prompt, setPrompt] = useState("");
 
   const { messages, sendMessage, isLoading } = useChat({
-    connection: fetchServerSentEvents("/api/ai/chat-no-streaming"),
+    connection: fetchServerSentEvents("/api/ai/chat"),
   });
   const handleGenerate = () => {
     sendMessage(prompt);
   };
+
+  console.log({ messages });
 
   const wasLoading = useRef(isLoading);
   useEffect(() => {

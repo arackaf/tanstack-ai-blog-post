@@ -2,7 +2,7 @@ import { chat, toServerSentEventsResponse } from "@tanstack/ai";
 import { vercelGatewayText } from "@tanstack/ai-vercel-gateway";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/api/ai/chat")({
+export const Route = createFileRoute("/api/ai/chat-streaming")({
   server: {
     handlers: {
       POST: async ({ request }) => {

@@ -16,7 +16,7 @@ function BasicChat() {
   const [prompt, setPrompt] = useState("");
 
   const { messages, sendMessage, isLoading } = useChat({
-    connection: fetchServerSentEvents("/api/ai/chat"),
+    connection: fetchServerSentEvents("/api/ai/chat-streaming"),
   });
   const handleGenerate = () => {
     sendMessage(prompt);
