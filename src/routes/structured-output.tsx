@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-import { fetchServerSentEvents, useChat, type UIMessage } from "@tanstack/ai-react";
+import { fetchServerSentEvents, fetchJson, useChat, type UIMessage } from "@tanstack/ai-react";
 import { promptOutputSchema } from "#/lib/zod-schema";
 import type { WorkoutTemplateState } from "#/data/workout-templates/workout-state";
 import type { MessagePart } from "@tanstack/ai";
@@ -23,9 +23,9 @@ function BasicChat() {
   const [prompt, setPrompt] = useState("");
 
   const payload = useChat({
-    connection: fetchServerSentEvents("/api/ai/chat-with-persistence"),
+    connection: fetchServerSentEvents("/api/ai/chat-structured-output"),
     threadId: "xxx",
-    persistence: true,
+    //persistence: true,
     outputSchema: promptOutputSchema,
   });
 

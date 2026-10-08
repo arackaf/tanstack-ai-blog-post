@@ -16,6 +16,7 @@ import { Route as BasicChatWithPersistenceRouteImport } from './routes/basic-cha
 import { Route as StructuredOutputRouteImport } from './routes/structured-output'
 import { Route as ApiAiChatNoStreamingRouteImport } from './routes/api/ai/chat-no-streaming'
 import { Route as ApiAiChatStreamingRouteImport } from './routes/api/ai/chat-streaming'
+import { Route as ApiAiChatStructuredOutputRouteImport } from './routes/api/ai/chat-structured-output'
 import { Route as ApiAiChatWithPersistenceRouteImport } from './routes/api/ai/chat-with-persistence'
 
 const IndexRoute = IndexRouteImport.update({
@@ -54,6 +55,12 @@ const ApiAiChatStreamingRoute = ApiAiChatStreamingRouteImport.update({
   path: '/api/ai/chat-streaming',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiChatStructuredOutputRoute =
+  ApiAiChatStructuredOutputRouteImport.update({
+    id: '/api/ai/chat-structured-output',
+    path: '/api/ai/chat-structured-output',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAiChatWithPersistenceRoute =
   ApiAiChatWithPersistenceRouteImport.update({
     id: '/api/ai/chat-with-persistence',
@@ -69,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/structured-output': typeof StructuredOutputRoute
   '/api/ai/chat-no-streaming': typeof ApiAiChatNoStreamingRoute
   '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
+  '/api/ai/chat-structured-output': typeof ApiAiChatStructuredOutputRoute
   '/api/ai/chat-with-persistence': typeof ApiAiChatWithPersistenceRoute
 }
 export interface FileRoutesByTo {
@@ -79,6 +87,7 @@ export interface FileRoutesByTo {
   '/structured-output': typeof StructuredOutputRoute
   '/api/ai/chat-no-streaming': typeof ApiAiChatNoStreamingRoute
   '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
+  '/api/ai/chat-structured-output': typeof ApiAiChatStructuredOutputRoute
   '/api/ai/chat-with-persistence': typeof ApiAiChatWithPersistenceRoute
 }
 export interface FileRoutesById {
@@ -90,6 +99,7 @@ export interface FileRoutesById {
   '/structured-output': typeof StructuredOutputRoute
   '/api/ai/chat-no-streaming': typeof ApiAiChatNoStreamingRoute
   '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
+  '/api/ai/chat-structured-output': typeof ApiAiChatStructuredOutputRoute
   '/api/ai/chat-with-persistence': typeof ApiAiChatWithPersistenceRoute
 }
 export interface FileRouteTypes {
@@ -102,6 +112,7 @@ export interface FileRouteTypes {
     | '/structured-output'
     | '/api/ai/chat-no-streaming'
     | '/api/ai/chat-streaming'
+    | '/api/ai/chat-structured-output'
     | '/api/ai/chat-with-persistence'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -112,6 +123,7 @@ export interface FileRouteTypes {
     | '/structured-output'
     | '/api/ai/chat-no-streaming'
     | '/api/ai/chat-streaming'
+    | '/api/ai/chat-structured-output'
     | '/api/ai/chat-with-persistence'
   id:
     | '__root__'
@@ -122,6 +134,7 @@ export interface FileRouteTypes {
     | '/structured-output'
     | '/api/ai/chat-no-streaming'
     | '/api/ai/chat-streaming'
+    | '/api/ai/chat-structured-output'
     | '/api/ai/chat-with-persistence'
   fileRoutesById: FileRoutesById
 }
@@ -133,6 +146,7 @@ export interface RootRouteChildren {
   StructuredOutputRoute: typeof StructuredOutputRoute
   ApiAiChatNoStreamingRoute: typeof ApiAiChatNoStreamingRoute
   ApiAiChatStreamingRoute: typeof ApiAiChatStreamingRoute
+  ApiAiChatStructuredOutputRoute: typeof ApiAiChatStructuredOutputRoute
   ApiAiChatWithPersistenceRoute: typeof ApiAiChatWithPersistenceRoute
 }
 
@@ -187,6 +201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAiChatStreamingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai/chat-structured-output': {
+      id: '/api/ai/chat-structured-output'
+      path: '/api/ai/chat-structured-output'
+      fullPath: '/api/ai/chat-structured-output'
+      preLoaderRoute: typeof ApiAiChatStructuredOutputRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai/chat-with-persistence': {
       id: '/api/ai/chat-with-persistence'
       path: '/api/ai/chat-with-persistence'
@@ -205,6 +226,7 @@ const rootRouteChildren: RootRouteChildren = {
   StructuredOutputRoute: StructuredOutputRoute,
   ApiAiChatNoStreamingRoute: ApiAiChatNoStreamingRoute,
   ApiAiChatStreamingRoute: ApiAiChatStreamingRoute,
+  ApiAiChatStructuredOutputRoute: ApiAiChatStructuredOutputRoute,
   ApiAiChatWithPersistenceRoute: ApiAiChatWithPersistenceRoute,
 }
 export const routeTree = rootRouteImport
