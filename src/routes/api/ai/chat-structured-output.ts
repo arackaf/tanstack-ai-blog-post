@@ -1,5 +1,5 @@
 import { promptOutputSchema } from "#/lib/zod-schema";
-import { chat } from "@tanstack/ai";
+import { chat, toJsonResponse } from "@tanstack/ai";
 import { vercelGatewayText } from "@tanstack/ai-vercel-gateway";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -15,7 +15,7 @@ export const Route = createFileRoute("/api/ai/chat-structured-output")({
           outputSchema: promptOutputSchema,
         });
 
-        return Response.json(stream);
+        return toJsonResponse(stream);
       },
     },
   },
