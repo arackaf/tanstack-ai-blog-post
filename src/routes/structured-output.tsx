@@ -24,8 +24,6 @@ function BasicChat() {
 
   const payload = useChat({
     connection: fetchJson("/api/ai/chat-structured-output"),
-    threadId: "xxx",
-    //persistence: true,
     outputSchema: promptOutputSchema,
   });
 
@@ -106,18 +104,6 @@ const DisplayMessagePart: FC<DisplayMessagePartProps> = props => {
         </div>
       );
     }
-
-    if (!part.partial?.commentary) {
-      return null;
-    }
-    return (
-      <div className="flex flex-col gap-2">
-        {part.partial?.commentary && <span>{part.partial?.commentary}</span>}
-        {part.partial?.workouts?.map((workoutTemplate, idx) => (
-          <DisplayWorkoutTemplateStreaming key={idx} workoutTemplate={workoutTemplate as WorkoutTemplateState} />
-        ))}
-      </div>
-    );
   }
   if (part.type === "text") {
     return <span>{part.content}</span>;
