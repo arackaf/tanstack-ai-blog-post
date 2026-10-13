@@ -23,7 +23,7 @@ function BasicChat() {
   const [prompt, setPrompt] = useState("");
 
   const payload = useChat({
-    connection: fetchJson("/api/ai/chat-structured-output"),
+    connection: fetchServerSentEvents("/api/ai/chat-structured-output"),
     outputSchema: promptOutputSchema,
   });
 
