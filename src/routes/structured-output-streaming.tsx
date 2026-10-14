@@ -105,10 +105,6 @@ const DisplayMessagePart: FC<DisplayMessagePartProps> = props => {
         </div>
       );
     }
-
-    if (!part.partial?.commentary) {
-      return null;
-    }
     return (
       <div className="flex flex-col gap-2">
         {part.partial?.commentary && <span>{part.partial?.commentary}</span>}
