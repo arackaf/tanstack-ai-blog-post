@@ -1,16 +1,14 @@
-import { useEffect, useRef, useState, type FC } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Loader2 } from "lucide-react";
 
 import { createFileRoute } from "@tanstack/react-router";
-import type { MessagePart } from "@tanstack/ai";
-import { fetchJson, useChat, type UIMessage } from "@tanstack/ai-react";
+import { fetchJson, useChat } from "@tanstack/ai-react";
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 import { promptOutputSchema } from "#/lib/zod-schema";
-import type { WorkoutTemplateState } from "#/data/workout-templates/workout-state";
 import { DisplayWorkoutTemplate } from "#/components/display-workout-template/DisplayWorkoutTemplate";
 
 export const Route = createFileRoute("/structured-output")({
@@ -53,7 +51,22 @@ function BasicChat() {
               {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
             </div>
           ) : (
-            <DisplayMessage key={message.id} message={message} />
+            <div key={message.id} className="w-full">
+              {message.parts.map((part, index) => (
+                <div key={index}>
+                  {part.type === "structured-output" && part.status === "complete" ? (
+                    <div className="flex flex-col gap-2">
+                      <span>{part.data.commentary}</span>
+                      {part.data.workouts.map(workoutTemplate => (
+                        <DisplayWorkoutTemplate workoutTemplate={workoutTemplate} />
+                      ))}
+                    </div>
+                  ) : part.type === "text" ? (
+                    <span>{part.content}</span>
+                  ) : null}
+                </div>
+              ))}
+            </div>
           ),
         )}
         {isLoading && <Loader2 className="size-6 animate-spin text-muted-foreground" />}
@@ -70,43 +83,3 @@ function BasicChat() {
     </div>
   );
 }
-
-type DisplayMessageProps = {
-  message: UIMessage<any, { commentary: string; workouts: WorkoutTemplateState[] }, undefined>;
-};
-const DisplayMessage: FC<DisplayMessageProps> = props => {
-  const { message } = props;
-
-  return (
-    <div key={message.id} className="w-full">
-      {message.parts.map((part, index) => (
-        <div key={index}>
-          <DisplayMessagePart part={part} />
-        </div>
-      ))}
-    </div>
-  );
-};
-
-type DisplayMessagePartProps = {
-  part: MessagePart<{ commentary: string; workouts: WorkoutTemplateState[] }>;
-};
-const DisplayMessagePart: FC<DisplayMessagePartProps> = props => {
-  const { part } = props;
-  if (part.type === "structured-output") {
-    if (part.status === "complete") {
-      return (
-        <div className="flex flex-col gap-2">
-          <span>{part.data.commentary}</span>
-          {part.data.workouts.map(workoutTemplate => (
-            <DisplayWorkoutTemplate workoutTemplate={workoutTemplate} />
-          ))}
-        </div>
-      );
-    }
-  }
-  if (part.type === "text") {
-    return <span>{part.content}</span>;
-  }
-  return null;
-};

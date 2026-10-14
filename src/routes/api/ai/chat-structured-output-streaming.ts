@@ -1,5 +1,5 @@
 import { promptOutputSchema } from "#/lib/zod-schema";
-import { chat, toJsonResponse } from "@tanstack/ai";
+import { chat, toServerSentEventsResponse } from "@tanstack/ai";
 import { vercelGatewayText } from "@tanstack/ai-vercel-gateway";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/api/ai/chat-structured-output-streaming")
       POST: async ({ request }) => {
         const { messages } = await request.json();
 
-        const stream = await chat({
+        const stream = chat({
           adapter: vercelGatewayText("anthropic/claude-opus-5"),
           messages,
           outputSchema: promptOutputSchema,
@@ -31,7 +31,7 @@ Generate workouts that conform to the provided output schema.
           ],
         });
 
-        return toJsonResponse(stream);
+        return toServerSentEventsResponse(stream);
       },
     },
   },
