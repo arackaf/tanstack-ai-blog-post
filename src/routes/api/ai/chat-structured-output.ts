@@ -13,7 +13,6 @@ export const Route = createFileRoute("/api/ai/chat-structured-output")({
           adapter: vercelGatewayText("anthropic/claude-opus-5"),
           messages,
           outputSchema: promptOutputSchema,
-          stream: true,
           systemPrompts: [
             `
           You are a workout-programming assistant.

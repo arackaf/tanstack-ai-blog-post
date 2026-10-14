@@ -46,6 +46,7 @@ const navLinks = [
   { to: "/basic-chat-streaming", label: "Chat streaming" },
   { to: "/basic-chat-with-persistence", label: "Persisted chat" },
   { to: "/structured-output", label: "Structured output" },
+  { to: "/structured-output-streaming", label: "Structured output streaming" },
 ] as const;
 
 function MobileNav() {
