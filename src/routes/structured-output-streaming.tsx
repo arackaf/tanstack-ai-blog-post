@@ -24,7 +24,7 @@ function BasicChat() {
   const [prompt, setPrompt] = useState("");
 
   const payload = useChat({
-    connection: fetchServerSentEvents("/api/ai/chat-structured-output"),
+    connection: fetchServerSentEvents("/api/ai/chat-structured-output-streaming"),
     outputSchema: promptOutputSchema,
   });
 
