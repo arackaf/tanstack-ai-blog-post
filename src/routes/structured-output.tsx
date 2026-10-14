@@ -1,16 +1,16 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type FC } from "react";
 import { Loader2 } from "lucide-react";
+
+import { createFileRoute } from "@tanstack/react-router";
+import type { MessagePart } from "@tanstack/ai";
+import { fetchJson, useChat, type UIMessage } from "@tanstack/ai-react";
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-import { fetchServerSentEvents, fetchJson, useChat, type UIMessage } from "@tanstack/ai-react";
 import { promptOutputSchema } from "#/lib/zod-schema";
 import type { WorkoutTemplateState } from "#/data/workout-templates/workout-state";
-import type { MessagePart } from "@tanstack/ai";
-import { DisplayWorkoutTemplate as DisplayWorkoutTemplateStreaming } from "#/components/display-workout-template-streaming/DisplayWorkoutTemplate";
 import { DisplayWorkoutTemplate } from "#/components/display-workout-template/DisplayWorkoutTemplate";
 
 export const Route = createFileRoute("/structured-output")({
