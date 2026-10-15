@@ -9,7 +9,7 @@ export const Route = createFileRoute("/api/ai/chat-structured-output")({
       POST: async ({ request }) => {
         const { messages } = await request.json();
 
-        const stream = await chat({
+        const message = await chat({
           adapter: vercelGatewayText("anthropic/claude-opus-5"),
           messages,
           outputSchema: promptOutputSchema,
@@ -30,7 +30,7 @@ Generate workouts that conform to the provided output schema.
           ],
         });
 
-        return toJsonResponse(stream);
+        return toJsonResponse(message);
       },
     },
   },

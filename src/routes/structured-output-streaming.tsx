@@ -109,7 +109,7 @@ const DisplayMessagePart: FC<DisplayMessagePartProps> = props => {
       <div className="flex flex-col gap-2">
         {part.partial?.commentary && <span>{part.partial?.commentary}</span>}
         {part.partial?.workouts?.map((workoutTemplate, idx) => (
-          <DisplayWorkoutTemplateStreaming key={idx} workoutTemplate={workoutTemplate as WorkoutTemplateState} />
+          <DisplayWorkoutTemplateStreaming key={idx} workoutTemplate={workoutTemplate} />
         ))}
       </div>
     );
